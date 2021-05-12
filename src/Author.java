@@ -18,4 +18,6 @@ class Author extends Person{
         System.out.println("Age: " + age);
         System.out.println("Number of books published: " + nr_books_published);
     }
+    public int getNr_books_published() {return nr_books_published;}
+    public void setBooks_published(int i) {this.nr_books_published=i;}
 }

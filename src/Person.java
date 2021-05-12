@@ -19,5 +19,7 @@ abstract class Person {
         this.age = newAge;
     }
 
+    public Address getAddress() { return address;}
+
     public abstract void details();
 }

@@ -5,8 +5,9 @@ public class Editor {
     private int nr_books_published = 0;
     SortedSet<Book> books_published = new TreeSet<Book>();
 
-    public Editor(String name, Address address){
+    public Editor(String name, int nr_books_published){
         this.name = name;
+        this.nr_books_published = nr_books_published;
     }
 
     public String getName() {
@@ -16,6 +17,8 @@ public class Editor {
     public void setName(String newName) {
         this.name = newName;
     }
+
+    public int getNr_books_published() {return nr_books_published;}
 
     public void addBooktoEditor(Book newBook){
         nr_books_published = nr_books_published + 1;

@@ -16,9 +16,19 @@ public class Book implements Comparable<Book>{
         author.addBooktoAuthor(this);
     }
 
+    public Author getAuthor(){ return author;}
+
+    public Editor getEditor(){ return editor;}
+
+    public Category getCategory(){ return category;}
+
     public String getTitle() {
         return title;
     }
+
+    public int getCopies() { return copies;}
+
+    public int getAvailable_copies() { return available_copies;}
 
     public void setName(String newTitle) {
         this.title = newTitle;
