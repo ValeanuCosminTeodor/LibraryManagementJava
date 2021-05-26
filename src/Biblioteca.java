@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -291,5 +295,323 @@ public class Biblioteca {
         ArrayList<Employee> employees = new ArrayList<>();
         ArrayList<Category> categories = new ArrayList<>();
         ArrayList<Address>  addresses = new ArrayList<>();
+    }
+
+    Statement establishConn(){
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarymanagement", "root", "pao123");
+
+            return conn.createStatement();
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    void DBAddAuthor(int id, String author_name, int age, String address, int nr_books_published){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO author VALUES" +
+                    "('"+ id +"','" + author_name + "','" + age + "','" + address + "','" + nr_books_published+ "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowAuthors(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery("select * from author");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("author_name")+" "
+                        +resultSet.getString("age")+" "
+                        +resultSet.getString("author_address")+
+                        " Number of books published:"+resultSet.getString("nr_books_published"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateAuthor(int id, String author_name, int age, String address, int nr_books_published){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update author set author_name = '" + author_name + "', age = " +
+                    age + ", author_address = '" + address +"', nr_books_published = " + nr_books_published +
+                    " where idauthor = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    void DBRemoveAuthor(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from author where idauthor = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void DBAddEditor(int id, String editor_name, int nr_books_published){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO editor VALUES" +
+                    "('"+ id +"','" + editor_name + "','" + nr_books_published+ "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowEditors(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery("select * from editor");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("editor_name")+" "+
+                        " Number of books published:"+resultSet.getString("nr_books_published"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateEditor(int id, String editor_name, int nr_books_published){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update editor set editor_name = '" + editor_name
+                    +"', nr_books_published = " + nr_books_published +
+                    " where ideditor = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    void DBRemoveEditor(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from editor where ideditor = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void DBAddCategory(int id, String category_name){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO category VALUES" +
+                    "('"+ id +"','" + category_name + "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowCategories(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery("select * from category");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("category_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateCategory(int id, String category_name){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update category set category_name = '" + category_name +"'"+
+                    " where idcategory = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    void DBRemoveCategory(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from category where idcategory = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void DBAddEmployee(int id, String employee_name, int age, String address, int salary, String position){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO employee VALUES" +
+                    "('"+ id +"','" + employee_name + "','" + age + "','" + address + "','" + salary + "','" + position + "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowEmployees(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery("select * from employee");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("employee_name")+" "
+                        +resultSet.getString("age")+" "
+                        +resultSet.getString("address")+
+                        " Salary:"+resultSet.getString("salary")
+                        +" "+resultSet.getString("position"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateEmployee(int id, String employee_name, int age, String address, int salary, String position){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update employee set employee_name = '" + employee_name + "', age = " +
+                    age + ", address = '" + address +"', salary = " + salary +", position = '" + position + "'" +
+                    " where idemployee = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    void DBRemoveEmployee(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from employee where idemployee = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void DBAddClient(int id, String client_name, int age, String address, int nr_past_rentals, int nr_active_rentals){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO client VALUES" +
+                    "('"+ id +"','" + client_name + "','" + age + "','" + address + "','" + nr_past_rentals + "','" + nr_active_rentals + "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowClients(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery("select * from client");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("client_name")+" "
+                        +resultSet.getString("age")+" "
+                        +resultSet.getString("address")+
+                        " Number of past rentals:"+resultSet.getString("nr_past_rentals")
+                        +" Number of active rentals:"+resultSet.getString("nr_active_rentals"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateClient(int id, String client_name, int age, String address, int nr_past_rentals, int nr_active_rentals){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update client set client_name = '" + client_name + "', age = " +
+                    age + ", address = '" + address +"', nr_past_rentals = " + nr_past_rentals +", nr_active_rentals = '" + nr_active_rentals + "'" +
+                    " where idclient = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    void DBRemoveClient(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from client where idclient = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    void DBAddBook(int id, int author_id, int editor_id, int category_id,String title, int copies, int available_copies ){
+        Statement statement = establishConn();
+        try {
+            statement.executeUpdate("INSERT INTO book VALUES" +
+                    "('"+ id +"','" + author_id + "','" + editor_id + "','" + category_id + "','" + title + "','" + copies + "','" + available_copies + "')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBShowBooks(){
+        Statement statement = establishConn();
+        try {
+
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT book.title, author.author_name, editor.editor_name, category.category_name, book.copies, book.available_copies\n" +
+                    "FROM book\n" +
+                    "JOIN author on author.idauthor = book.author_id\n" +
+                    "JOIN editor on editor.ideditor = book.editor_id\n" +
+                    "JOIN category on category.idcategory = book.category_id");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("title")+" "
+                        +resultSet.getString("author_name")+" "
+                        +resultSet.getString("editor_name")+" "
+                        +resultSet.getString("category_name")+
+                        " Number of copies:"+resultSet.getString("copies")
+                        +" Number of available copies:"+resultSet.getString("available_copies"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void DBUpdateBook(int id, int author_id, int editor_id, int category_id,String title, int copies, int available_copies ){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("update book set author_id = " + author_id + ", editor_id = " +
+                    editor_id + ", category_id = " + category_id +", title = '" + title +"', copies = '" + copies +"', available_copies = '" + available_copies + "'" +
+                    " where idbook = '" + id + "';");
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    void DBRemoveBook(int id){
+        Statement statement = establishConn();
+        try{
+            statement.executeUpdate("delete from book where idbook = '" + id +"';");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
